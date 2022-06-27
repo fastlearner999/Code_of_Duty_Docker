@@ -6,7 +6,8 @@ VALUES
 ('abigail@gmail.com', '86b531df70c2e6aa69c655b1bda6c9f9', 'Abigail', 'Shadare', 'F');
 
 INSERT INTO contents(title, html_content)
-('Terms & Conditions', '<h1>Terms & Conditions</h1><br><br>Terms....'),
+VALUES
+('Terms & Conditions', 'Terms and Conditions</h1><br><br>Terms....'),
 ('Help', '<h1>Help</h1><br><br>How to use this app....');
 
 
