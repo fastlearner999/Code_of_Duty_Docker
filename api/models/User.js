@@ -37,38 +37,29 @@ module.exports = class User {
         });
     };
     
-    static async create(newBookData){
+    static async create(newUserData){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let author = await Author.findOrCreateByName(newBookData.authorName);
-                if (newBookData.yearOfPublication === undefined) {
-                    newBookData['yearOfPublication'] = new Date().getFullYear();
-                }
-                if (newBookData.abstract === undefined) {
-                    newBookData['abstract'] = "";
-                }
-                let bookData = await db.query(`INSERT INTO books (title, year_of_publication, abstract, author_id) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);*/
-                resolve('Resolve');
+                let userData = await db.query(
+                    `INSERT INTO users (email, password, first_name, last_name, gender) 
+                    VALUES ($1, $2, $3, $4, $5) RETURNING *;`, 
+                    [ newUserData.email, newUserData.password, newUserData.first_name, newUserData.last_name, newUserData.gender ]);
+                resolve (userData.rows[0]);
             } catch (err) {
                 reject('User could not be created');
             }
         });
     };
 
-    static async update(newBookData){
+    static async update(updateUserData){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let author = await Author.findOrCreateByName(newBookData.authorName);
-                if (newBookData.yearOfPublication === undefined) {
-                    newBookData['yearOfPublication'] = new Date().getFullYear();
-                }
-                if (newBookData.abstract === undefined) {
-                    newBookData['abstract'] = "";
-                }
-                let bookData = await db.query(`INSERT INTO books (title, year_of_publication, abstract, author_id) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);*/
-                resolve('Resolve');
+                let userData = await db.query(
+                    `UPDATE users 
+                    SET email = $1, passwprd = $2, first_name = $3, last_name = $4, gender = $5
+                    WHERE id = $6 RETURNING *;`, 
+                    [ updateUserData.email, updateUserData.passwprd, updateUserData.first_name, updateUserData.last_name, updateUserData.gender, updateUserData.id ]);
+                resolve (userData.rows[0]);
             } catch (err) {
                 reject('User could not be updated');
             }
@@ -78,15 +69,38 @@ module.exports = class User {
     destroy(){
         return new Promise(async(resolve, reject) => {
             try {
-                /*const result = await db.query('DELETE FROM books WHERE id = $1 RETURNING author_id', [ this.id ]);
-                const author = await Author.findById(result.rows[0].author_id);
-                const books = await author.books;
-                if(!books.length){await author.destroy()}
-                resolve('Book was deleted')*/
-                resolve('Resolve');
+                await db.query('DELETE FROM users WHERE id = $1', [ this.id ]);
+                resolve('Book was deleted');
             } catch (err) {
                 reject('User could not be deleted')
             }
         })
+    };
+
+    static async login(loginData){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let userData = await db.query(`SELECT * FROM users where email = $1 and password = $2`, [ loginData.email, loginData.password ]);
+                let user = new User(userData.rows[0]);
+                await db.query(
+                    `UPDATE users 
+                    SET last_login = now() 
+                    WHERE id = $1`, [ user.id ]);
+                resolve (user);
+            } catch (err) {
+                reject('User could not be updated');
+            }
+        });
+    };
+
+    static async logout(logoutData){
+        return new Promise (async (resolve, reject) => {
+            try {
+                //TODO
+                resolve ('TODO');
+            } catch (err) {
+                reject('User could not be updated');
+            }
+        });
     };
 };

@@ -1,6 +1,6 @@
 const User = require('../models/User');
 
-async function index (req, res) {
+async function getAll (req, res) {
     try {
         const users = await User.all;
         res.status(200).json(users);
@@ -9,7 +9,7 @@ async function index (req, res) {
     }
 }
 
-async function show (req, res) {
+async function findById (req, res) {
     try {
         const user = await User.findById(req.params.id);
         res.status(200).json(user);
@@ -64,4 +64,4 @@ async function logout (req, res) {
     };
 }
 
-module.exports = { index, show, create, update, destroy, login, logout }
+module.exports = { getAll, findById, create, update, destroy, login, logout }
