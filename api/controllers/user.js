@@ -48,19 +48,19 @@ async function destroy (req, res) {
 
 async function login (req, res) {
     try {
-        // TODO
-        res.status(200).end();
+        const user = await User.login(req.body);
+        res.status(200).json(user);
     } catch (err) {
-        res.status(404).json({err});
+        res.status(401).json({err});
     };
 }
 
 async function logout (req, res) {
     try {
-        // TODO
+        await User.logout(req.body);
         res.status(200).end();
     } catch (err) {
-        res.status(404).json({err});
+        res.status(401).json({err});
     };
 }
 
