@@ -2,20 +2,26 @@ const db = require('../dbConfig/init');
 
 module.exports = class Goal {
     constructor(data){
-        /*this.id = data.id;
-        this.title = data.title;
-        this.yearOfPublication = data.year_of_publication;
-        this.abstract = data.abstract;
-        this.author = { name: data.author_name, path: `/authors/${data.author_id}`};*/
+
+        this.id = data.id 
+        this.goal_name = data.goal_name
+        this.sport_type = data.sport_type
+        this.period = data.period
+        this.period_type = data.period_type
+        this.start_date = data.start_date
+        this.end_date = data.end_date
+        this.target_distance = data.target_distance
+        this.target_distance_unit = data.target_distance_unit
+        this.create_date = data.create_date
+        this.update_date = data.update_date
     };
 
     static get all(){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query('SELECT * FROM books');
-                let books = bookData.rows.map(b => new Book(b));
-                resolve (books);*/
-                resolve('Resolve');
+                let goalData = await db.query('SELECT * FROM goals');
+                let goals = goalData.rows.map(g => new Goal(g));
+                resolve (goals);
             } catch (err) {
                 reject('Goal not found');
             }
@@ -25,13 +31,13 @@ module.exports = class Goal {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query(`SELECT books.*, authors.name as author_name
-                                                    FROM books 
-                                                    JOIN authors
-                                                    ON books.author_id = authors.id
-                                                    WHERE books.id = $1;`, [ id ]);
-                let book = new Book(bookData.rows[0]);
-                resolve (book);*/
+                let goalData = await db.query(`SELECT goals.*, ....
+                    FROM goals or ...
+                    JOIN users or ...
+                    ON goals....
+                    WHERE goals.id = $1;`, [ id ]);
+                let goal = new Goal(goalData.rows[0]);
+                resolve (goal);
                 resolve('Resolve');
             } catch (err) {
                 reject('Goal not found');
@@ -39,18 +45,19 @@ module.exports = class Goal {
         });
     };
     
-    static async create(newBookData){
+    static async create(newgoalData){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let author = await Author.findOrCreateByName(newBookData.authorName);
-                if (newBookData.yearOfPublication === undefined) {
-                    newBookData['yearOfPublication'] = new Date().getFullYear();
-                }
-                if (newBookData.abstract === undefined) {
-                    newBookData['abstract'] = "";
-                }
-                let bookData = await db.query(`INSERT INTO books (title, year_of_publication, abstract, author_id) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);*/
+                // let goal = await Author.findOrCreateByName(newBookData.authorName);
+                // if (newBookData.yearOfPublication === undefined) {
+                //     newBookData['yearOfPublication'] = new Date().getFullYear();
+                // }
+                // if (newBookData.abstract === undefined) {
+                //     newBookData['abstract'] = "";
+                // }
+
+                let goalData = await db.query(`INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
+                resolve (bookData.rows[0]);
                 resolve('Resolve');
             } catch (err) {
                 reject('Goal could not be created');
@@ -80,12 +87,12 @@ module.exports = class Goal {
     destroy(){
         return new Promise(async(resolve, reject) => {
             try {
-                /*const result = await db.query('DELETE FROM books WHERE id = $1 RETURNING author_id', [ this.id ]);
-                const author = await Author.findById(result.rows[0].author_id);
-                const books = await author.books;
-                if(!books.length){await author.destroy()}
-                resolve('Book was deleted')*/
-                resolve('Resolve');
+                const result = await db.query('DELETE FROM goals WHERE id = $1 RETURNING *', [ this.id ]);
+                const goal = await Goal.findById(result.rows[0]);
+                // const books = await author.books;
+                if(!goals.length){await Goal.destroy()}
+                resolve(goal)
+                // resolve('Resolve');
             } catch (err) {
                 reject('Book could not be deleted')
             }
