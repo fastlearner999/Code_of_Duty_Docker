@@ -1,6 +1,6 @@
 const Workout = require('../models/Workout');
 
-async function index (req, res) {
+async function getAll (req, res) {
     try {
         const workouts = await Workout.all;
         res.status(200).json(workouts);
@@ -9,10 +9,19 @@ async function index (req, res) {
     }
 }
 
-async function show (req, res) {
+async function findById (req, res) {
     try {
         const workout = await Workout.findById(req.params.id);
         res.status(200).json(workout);
+    } catch (err) {
+        res.status(404).json({err})
+    }
+}
+
+async function findByUserId (req, res) {
+    try {
+        const workouts = await Workout.findByUserId(req.params.userId);
+        res.status(200).json(workouts);
     } catch (err) {
         res.status(404).json({err})
     }
@@ -46,4 +55,4 @@ async function destroy (req, res) {
     };
 }
 
-module.exports = { index, show, create, update, destroy }
+module.exports = { getAll, findById, findByUserId, create, update, destroy }
