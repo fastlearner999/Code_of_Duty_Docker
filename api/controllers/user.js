@@ -20,8 +20,8 @@ async function show (req, res) {
 
 async function create (req, res) {
     try {
-        //const user = await User.create(req.body);
-        res.status(201).end();
+        const user = await User.create(req.body);
+        res.status(201).json(user);
     } catch (err) {
         res.status(422).json({err})
     }
@@ -29,8 +29,8 @@ async function create (req, res) {
 
 async function update (req, res) {
     try {
-        //const user = await User.update(req.body);
-        res.status(202).end();
+        const user = await User.update(req.body);
+        res.status(202).json(user);
     } catch (err) {
         res.status(404).json({err})
     }
@@ -38,12 +38,30 @@ async function update (req, res) {
 
 async function destroy (req, res) {
     try {
-        //const user = await User.findById(req.params.id);
-        //const resp = await book.destroy();
+        const user = await User.findById(req.params.id);
+        await user.destroy();
         res.status(204).end();
     } catch (err) {
         res.status(404).json({err});
     };
 }
 
-module.exports = { index, show, create, update, destroy }
+async function login (req, res) {
+    try {
+        // TODO
+        res.status(200).end();
+    } catch (err) {
+        res.status(404).json({err});
+    };
+}
+
+async function logout (req, res) {
+    try {
+        // TODO
+        res.status(200).end();
+    } catch (err) {
+        res.status(404).json({err});
+    };
+}
+
+module.exports = { index, show, create, update, destroy, login, logout }
