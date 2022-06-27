@@ -2,20 +2,26 @@ const db = require('../dbConfig/init');
 
 module.exports = class Workout {
     constructor(data){
-        /*this.id = data.id;
-        this.title = data.title;
-        this.yearOfPublication = data.year_of_publication;
-        this.abstract = data.abstract;
-        this.author = { name: data.author_name, path: `/authors/${data.author_id}`};*/
+        this.id = data.id;
+        this.user_id = data.user_id;
+        this.sport_type = data.sport_type;
+        this.start_time = data.start_time;
+        this.end_time = data.end_time;
+        this.break_duration = data.break_duration;
+        this.total_distance = data.total_distance;
+        this.total_distance_unit = data.total_distance_unit;
+        this.total_duration = data.total_duration;
+        this.total_duration_unit = data.total_duration_unit;
+        this.create_date = data.create_date;
+        this.update_date = data.update_date;
     };
 
     static get all(){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query('SELECT * FROM books');
-                let books = bookData.rows.map(b => new Book(b));
-                resolve (books);*/
-                resolve('Resolve');
+                let workoutData = await db.query('SELECT * FROM workouts ORDER BY create_date DESC');
+                let workouts = workoutData.rows.map(w => new Workout(w));
+                resolve (workouts);
             } catch (err) {
                 reject('Workout not found');
             }
@@ -25,52 +31,50 @@ module.exports = class Workout {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query(`SELECT books.*, authors.name as author_name
-                                                    FROM books 
-                                                    JOIN authors
-                                                    ON books.author_id = authors.id
-                                                    WHERE books.id = $1;`, [ id ]);
-                let book = new Book(bookData.rows[0]);
-                resolve (book);*/
-                resolve('Resolve');
+                let workData = await db.query(`SELECT * FROM workouts WHERE id = $1`, [ id ]);
+                let workout = new Book(workData.rows[0]);
+                resolve (workout);
+            } catch (err) {
+                reject('Workout not found');
+            }
+        });
+    };
+
+    static findByUserId(user_id){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let workoutData = await db.query('SELECT * FROM workouts WHERE user_id = $1 ORDER BY create_date DESC', [ user_id ]);
+                let workouts = workoutData.rows.map(w => new Workout(w));
+                resolve (workouts);
             } catch (err) {
                 reject('Workout not found');
             }
         });
     };
     
-    static async create(newBookData){
+    static async create(newWorkoutData){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let author = await Author.findOrCreateByName(newBookData.authorName);
-                if (newBookData.yearOfPublication === undefined) {
-                    newBookData['yearOfPublication'] = new Date().getFullYear();
-                }
-                if (newBookData.abstract === undefined) {
-                    newBookData['abstract'] = "";
-                }
-                let bookData = await db.query(`INSERT INTO books (title, year_of_publication, abstract, author_id) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);*/
-                resolve('Resolve');
+                let workoutData = await db.query(
+                    `INSERT INTO workouts (user_id, sport_type, start_time, end_time, break_duration, total_distance, total_distance_unit, total_duration, total_duration_unit) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;`, 
+                    [ newWorkoutData.user_id, newWorkoutData.sport_type, newWorkoutData.start_time, newWorkoutData.end_time, newWorkoutData.break_duration, newWorkoutData.total_distance, newWorkoutData.total_distance_unit, newWorkoutData.total_duration, newWorkoutData.total_duration_unit ]);
+                resolve (workoutData.rows[0]);
             } catch (err) {
                 reject('Workout could not be created');
             }
         });
     };
 
-    static async update(newBookData){
+    static async update(updateWorkoutData){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let author = await Author.findOrCreateByName(newBookData.authorName);
-                if (newBookData.yearOfPublication === undefined) {
-                    newBookData['yearOfPublication'] = new Date().getFullYear();
-                }
-                if (newBookData.abstract === undefined) {
-                    newBookData['abstract'] = "";
-                }
-                let bookData = await db.query(`INSERT INTO books (title, year_of_publication, abstract, author_id) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);*/
-                resolve('Resolve');
+                let workoutData = await db.query(
+                    `UPDATE workouts 
+                    SET user_id = $1, sport_type = $2, start_time = $3, end_time = $4, break_duration = $5, total_distance = $6, total_distance_unit = $7, total_duration = $8, total_duration_unit = $9
+                    WHERE id = $10 RETURNING *;`, 
+                    [ updateWorkoutData.user_id, updateWorkoutData.sport_type, updateWorkoutData.start_time, updateWorkoutData.end_time, updateWorkoutData.break_duration, updateWorkoutData.total_distance, updateWorkoutData.total_distance_unit, updateWorkoutData.total_duration, updateWorkoutData.total_duration_unit, updateWorkoutData.id ]);
+                resolve (workoutData.rows[0]);
             } catch (err) {
                 reject('Workout could not be updated');
             }
@@ -80,12 +84,8 @@ module.exports = class Workout {
     destroy(){
         return new Promise(async(resolve, reject) => {
             try {
-                /*const result = await db.query('DELETE FROM books WHERE id = $1 RETURNING author_id', [ this.id ]);
-                const author = await Author.findById(result.rows[0].author_id);
-                const books = await author.books;
-                if(!books.length){await author.destroy()}
-                resolve('Book was deleted')*/
-                resolve('Resolve');
+                await db.query('DELETE FROM workouts WHERE id = $1', [ this.id ]);
+                resolve('Book was deleted');
             } catch (err) {
                 reject('Workout could not be deleted')
             }
