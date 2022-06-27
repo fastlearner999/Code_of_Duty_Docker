@@ -40,10 +40,27 @@ module.exports = class Workout {
         });
     };
 
-    static findByUserId(user_id){
+    static findByUserId(userId, month, year, sortBy){
         return new Promise (async (resolve, reject) => {
             try {
-                let workoutData = await db.query('SELECT * FROM workouts WHERE user_id = $1 ORDER BY create_date DESC', [ user_id ]);
+                let targetMonth = "" + new Date().getMonth();
+                if (month !== null) {
+                    targetMonth = month;
+                }
+                let targetYear = "" + new Date().getFullYear();
+                if (year !== null) {
+                    targetYear = year;
+                }
+                let sortingCriteria = 'create_date';
+                if (sortBy === 'sport_type') {
+                    sortingCriteria = 'sport_type';
+                }
+                let workoutData = await db.query(
+                    `SELECT * 
+                    FROM workouts 
+                    WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
+                    ORDER BY $4 DESC`, 
+                    [ userId, targetMonth, targetYear, sortingCriteria ]);
                 let workouts = workoutData.rows.map(w => new Workout(w));
                 resolve (workouts);
             } catch (err) {
