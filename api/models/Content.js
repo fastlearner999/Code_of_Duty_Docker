@@ -17,7 +17,7 @@ module.exports = class Content {
                 resolve (books);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book not found');
+                reject('Content not found');
             }
         });
     };
@@ -34,7 +34,7 @@ module.exports = class Content {
                 resolve (book);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book not found');
+                reject('Content not found');
             }
         });
     };

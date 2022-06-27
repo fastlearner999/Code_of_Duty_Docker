@@ -1,6 +1,6 @@
 async function getAll(category){
     try {
-        const response = await fetch(`http://localhost:3200/${category}`);
+        const response = await fetch(`http://localhost:3000/${category}`);
         const data = await response.json()
         return data;
     } catch (err) {
@@ -10,7 +10,7 @@ async function getAll(category){
 
 async function getItem(category, id) {
     try {
-        const response = await fetch(`http://localhost:3200/${category}/${id}`);
+        const response = await fetch(`http://localhost:3000/${category}/${id}`);
         const data = await response.json();
         return data;
     } catch (err) {
@@ -27,7 +27,7 @@ async function postBook(e){
             body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
         }
         
-        const response = await fetch('http://localhost:3200/books', options);
+        const response = await fetch('http://localhost:3000/books', options);
         const { id, err } = await response.json();
         if(err) { 
             throw Error(err) 
@@ -42,7 +42,7 @@ async function postBook(e){
 async function deleteBook(id){
     try {
         const options = { method: 'DELETE' }
-        await fetch(`http://localhost:3200/books/${id}`, options);
+        await fetch(`http://localhost:3000/books/${id}`, options);
         window.location.hash = `#books`
     } catch (err) {
         console.warn(err);

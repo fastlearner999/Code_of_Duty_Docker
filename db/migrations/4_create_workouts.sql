@@ -1,10 +1,6 @@
-DROP TABLE IF EXISTS workout;
+DROP TABLE IF EXISTS workouts;
 
-CREATE TYPE sport_type AS ENUM ('running', 'swiming', 'cycling', 'joking', 'walking', 'custom');
-CREATE TYPE distance_type AS ENUM ('km', 'mile');
-CREATE TYPE duration_type AS ENUM ('min', 'hour');
-
-CREATE TABLE workout (
+CREATE TABLE workouts (
     id serial PRIMARY KEY,
     user_id int not null,
     sport_type sport_type not null,

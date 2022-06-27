@@ -1,8 +1,6 @@
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS users;
 
-CREATE TYPE gender_type AS ENUM ('M', 'F', 'U');
-
-CREATE TABLE user (
+CREATE TABLE users (
     id serial PRIMARY KEY,
     email varchar(512) NOT NULL,
     password varchar(512) NOT NULL,

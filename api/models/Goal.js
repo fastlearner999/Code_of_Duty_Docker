@@ -17,7 +17,7 @@ module.exports = class Goal {
                 resolve (books);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book not found');
+                reject('Goal not found');
             }
         });
     };
@@ -34,7 +34,7 @@ module.exports = class Goal {
                 resolve (book);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book not found');
+                reject('Goal not found');
             }
         });
     };
@@ -53,7 +53,7 @@ module.exports = class Goal {
                 resolve (bookData.rows[0]);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be created');
+                reject('Goal could not be created');
             }
         });
     };

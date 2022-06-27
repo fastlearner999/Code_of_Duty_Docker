@@ -1,10 +1,6 @@
-DROP TABLE IF EXISTS goal;
+DROP TABLE IF EXISTS goals;
 
-CREATE TYPE sport_type AS ENUM ('running', 'swiming', 'cycling', 'joking', 'walking', 'custom');
-CREATE TYPE period_type AS ENUM ('day', 'week', 'month', 'year');
-CREATE TYPE distance_type AS ENUM ('km', 'mile');
-
-CREATE TABLE goal (
+CREATE TABLE goals (
     id serial PRIMARY KEY,
     goal_name varchar(1024) not null,
     sport_type sport_type not null,

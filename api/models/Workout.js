@@ -17,7 +17,7 @@ module.exports = class Workout {
                 resolve (books);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book not found');
+                reject('Workout not found');
             }
         });
     };
@@ -34,7 +34,7 @@ module.exports = class Workout {
                 resolve (book);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book not found');
+                reject('Workout not found');
             }
         });
     };
@@ -53,7 +53,7 @@ module.exports = class Workout {
                 resolve (bookData.rows[0]);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be created');
+                reject('Workout could not be created');
             }
         });
     };
@@ -72,7 +72,7 @@ module.exports = class Workout {
                 resolve (bookData.rows[0]);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be updated');
+                reject('Workout could not be updated');
             }
         });
     };
@@ -87,7 +87,7 @@ module.exports = class Workout {
                 resolve('Book was deleted')*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be deleted')
+                reject('Workout could not be deleted')
             }
         })
     };

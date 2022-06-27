@@ -1,4 +1,4 @@
-INSERT INTO user (email, password, first_name, last_name, gender) 
+INSERT INTO users (email, password, first_name, last_name, gender) 
 VALUES
 ('wing@gmail.com', '99d8c939300ceb17112aad875914c40f', 'Wing', 'Yuen', 'M'),
 ('aaron@gmail.com', '88e6b40bbb49de64dffa614724996c34', 'Aaron', 'Smith', 'M'),

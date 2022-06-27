@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS content;
+DROP TABLE IF EXISTS contents;
 
-CREATE TABLE content (
+CREATE TABLE contents (
     id serial PRIMARY KEY,
     html_content text not null,
     create_date timestamp default now() not null,

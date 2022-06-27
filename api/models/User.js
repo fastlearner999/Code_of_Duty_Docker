@@ -16,11 +16,11 @@ module.exports = class User {
     static get all(){
         return new Promise (async (resolve, reject) => {
             try {
-                let userData = await db.query('SELECT * FROM user');
+                let userData = await db.query('SELECT * FROM users');
                 let users = userData.rows.map(u => new User(u));
                 resolve(users);
             } catch (err) {
-                reject('Book not found');
+                reject('User not found');
             }
         });
     };
@@ -28,16 +28,11 @@ module.exports = class User {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query(`SELECT books.*, authors.name as author_name
-                                                    FROM books 
-                                                    JOIN authors
-                                                    ON books.author_id = authors.id
-                                                    WHERE books.id = $1;`, [ id ]);
-                let book = new Book(bookData.rows[0]);
-                resolve (book);*/
-                resolve('Resolve');
+                let userData = await db.query(`SELECT * FROM users where id = $1`, [ id ]);
+                let user = new User(userData.rows[0]);
+                resolve(user);
             } catch (err) {
-                reject('Book not found');
+                reject('User not found');
             }
         });
     };
@@ -56,7 +51,7 @@ module.exports = class User {
                 resolve (bookData.rows[0]);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be created');
+                reject('User could not be created');
             }
         });
     };
@@ -75,7 +70,7 @@ module.exports = class User {
                 resolve (bookData.rows[0]);*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be updated');
+                reject('User could not be updated');
             }
         });
     };
@@ -90,7 +85,7 @@ module.exports = class User {
                 resolve('Book was deleted')*/
                 resolve('Resolve');
             } catch (err) {
-                reject('Book could not be deleted')
+                reject('User could not be deleted')
             }
         })
     };
