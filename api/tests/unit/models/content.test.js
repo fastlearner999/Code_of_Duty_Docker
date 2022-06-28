@@ -1,6 +1,6 @@
 const Content = require('../../../models/Content');
 
-jest.mock('../../../models/Content');
+
 
 const pg = require('pg');
 jest.mock('pg');

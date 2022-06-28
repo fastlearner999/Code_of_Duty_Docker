@@ -1,6 +1,6 @@
 const Goal = require('../../../models/Goal');
 
-jest.mock('../../../models/Goal');
+
 
 const pg = require('pg');
 jest.mock('pg');
