@@ -1,6 +1,6 @@
 const Content = require('../models/Content');
 
-async function index (req, res) {
+async function getAll (req, res) {
     try {
         const contents = await Content.all;
         res.status(200).json(contents)
@@ -9,7 +9,7 @@ async function index (req, res) {
     }
 }
 
-async function show (req, res) {
+async function findById (req, res) {
     try {
         const content = await Content.findById(req.params.id);
         res.status(200).json(content);
@@ -18,4 +18,4 @@ async function show (req, res) {
     }
 }
 
-module.exports = { index, show }
+module.exports = { getAll, findById }

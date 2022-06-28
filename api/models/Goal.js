@@ -19,7 +19,10 @@ module.exports = class Goal {
     static get all(){
         return new Promise (async (resolve, reject) => {
             try {
-                let goalData = await db.query('SELECT * FROM goals');
+                let goalData = await db.query(
+                    `SELECT * 
+                     FROM goals 
+                     ORDER BY create_date DESC`);
                 let goals = goalData.rows.map(g => new Goal(g));
                 resolve (goals);
             } catch (err) {
@@ -31,14 +34,12 @@ module.exports = class Goal {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                let goalData = await db.query(`SELECT goals.*, ....
-                    FROM goals or ...
-                    JOIN users or ...
-                    ON goals....
-                    WHERE goals.id = $1;`, [ id ]);
+                let goalData = await db.query(
+                    `SELECT * 
+                     FROM goals
+                     WHERE id = $1;`, [ id ]);
                 let goal = new Goal(goalData.rows[0]);
                 resolve (goal);
-                resolve('Resolve');
             } catch (err) {
                 reject('Goal not found');
             }
@@ -48,38 +49,48 @@ module.exports = class Goal {
     static async create(newgoalData){
         return new Promise (async (resolve, reject) => {
             try {
-                // let goal = await Author.findOrCreateByName(newBookData.authorName);
-                // if (newBookData.yearOfPublication === undefined) {
-                //     newBookData['yearOfPublication'] = new Date().getFullYear();
-                // }
-                // if (newBookData.abstract === undefined) {
-                //     newBookData['abstract'] = "";
-                // }
-
-                let goalData = await db.query(`INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);
-                resolve('Resolve');
+                let goalData = await db.query(`
+                INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit) 
+                VALUES ($1, $2, $3, $4 $5, $6, $7, $8) 
+                RETURNING *;`,
+                       [ newgoalData.goal_name,
+                       newgoalData.sport_type,
+                       newgoalData.period,
+                       newgoalData.period_type,
+                       newgoalData.start_date,
+                       newgoalData.end_date,
+                       newgoalData.target_distance,
+                       newgoalData.target_distance_unit,
+                    ]);
+                resolve (goalData.rows[0]);
             } catch (err) {
                 reject('Goal could not be created');
             }
         });
     };
 
-    static async update(newBookData){
+    static async update(updateGoalData){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let author = await Author.findOrCreateByName(newBookData.authorName);
-                if (newBookData.yearOfPublication === undefined) {
-                    newBookData['yearOfPublication'] = new Date().getFullYear();
-                }
-                if (newBookData.abstract === undefined) {
-                    newBookData['abstract'] = "";
-                }
-                let bookData = await db.query(`INSERT INTO books (title, year_of_publication, abstract, author_id) VALUES ($1, $2, $3, $4) RETURNING *;`, [ newBookData.title, newBookData.yearOfPublication, newBookData.abstract, author.id ]);
-                resolve (bookData.rows[0]);*/
-                resolve('Resolve');
+                let goalData = await db.query(
+
+                    `UPDATE workouts
+                    SET goal_name = $1, sport_type = $2, period = $3, period_type = $4, start_date = $5, end_date = $6, target_distance = $7, target_distance_unit = $8
+                    WHERE id= $9
+                    RETURNING *;`,
+                     [                 
+                        updateGoalData.goal_name,
+                        updateGoalData.sport_type,
+                        updateGoalData.period,
+                        updateGoalData.period_type,
+                        updateGoalData.start_date,
+                        updateGoalData.end_date,
+                        updateGoalData.target_distance,
+                        updateGoalData.target_distance_unit,
+                    ]);
+                resolve (goalData.rows[0]);
             } catch (err) {
-                reject('Book could not be updated');
+                reject('Goal could not be updated');
             }
         });
     };
@@ -87,15 +98,50 @@ module.exports = class Goal {
     destroy(){
         return new Promise(async(resolve, reject) => {
             try {
-                const result = await db.query('DELETE FROM goals WHERE id = $1 RETURNING *', [ this.id ]);
+                const result = await db.query(
+                    'DELETE FROM goals WHERE id = $1 RETURNING *', [ this.id ]);
+
                 const goal = await Goal.findById(result.rows[0]);
-                // const books = await author.books;
-                if(!goals.length){await Goal.destroy()}
+
+                // if(!goals.length){await Goal.destroy()}
                 resolve(goal)
-                // resolve('Resolve');
             } catch (err) {
-                reject('Book could not be deleted')
+                reject('Goal could not be deleted')
             }
         })
     };
+    
+
+    /*****************************************************
+     * ******** check if findbyuser function is needed*****
+     *****************************************************/
+
+//     static findByUserId(userId, month, year, sortBy){
+//         return new Promise (async (resolve, reject) => {
+//         try {
+//             let targetMonth = "" + new Date().getMonth();
+//             if (month !== null) {
+//                 targetMonth = month;
+//             }
+//             let targetYear = "" + new Date().getFullYear();
+//             if (year !== null) {
+//                 targetYear = year;
+//             }
+//             let sortingCriteria = 'create_date';
+//             if (sortBy === 'sport_type') {
+//                 sortingCriteria = 'sport_type';
+//             }
+//             let workoutData = await db.query(
+//                 `SELECT * 
+//                 FROM workouts 
+//                 WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
+//                 ORDER BY $4 DESC`, 
+//                 [ userId, targetMonth, targetYear, sortingCriteria ]);
+//             let workouts = workoutData.rows.map(w => new Workout(w));
+//             resolve (workouts);
+//         } catch (err) {
+//             reject('Workout not found');
+//         }
+//     });
+// };
 };

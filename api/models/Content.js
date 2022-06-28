@@ -25,14 +25,12 @@ module.exports = class Content {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                // let contentData = await db.query(`SELECT contents.*, ...
-                // FROM contents or ... 
-                // JOIN workout or ...
-                // ON contents ...
-                // WHERE contents.id = $1;`, [ id ]);
-                // let content = new Content(contentData.rows[0]);
-                // resolve (content);
-                resolve ('resolve');
+               let contentData = await db.query(
+                `SELECT * 
+                FROM contents 
+                WHERE id = $1;`, [id])
+                let content = new Content(contentData.rows[0]);
+                resolve (content);
             } catch (err) {
                 reject('Content not found');
             }
