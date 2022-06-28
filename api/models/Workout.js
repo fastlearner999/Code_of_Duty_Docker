@@ -16,7 +16,7 @@ module.exports = class Workout {
         this.update_date = data.update_date;
     };
 
-    static get all(){
+    static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
                 let workoutData = await db.query('SELECT * FROM workouts ORDER BY create_date DESC');

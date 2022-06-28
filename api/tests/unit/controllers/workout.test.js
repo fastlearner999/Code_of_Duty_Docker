@@ -20,10 +20,9 @@ describe('workout controller', () => {
         })
 
         test('Workout getAll with a 500 status code', async () => {
-            jest.spyOn(Workout, 'getAll').mockRejectedValue({"err": "Workout not found"});
+            jest.spyOn(Workout, 'getAll').mockRejectedValue("Workout not found");
             await workoutController.getAll(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(500);
-            expect(mockJson).toHaveBeenCalledWith({"err": "Workout not found"});
         })
     });
 
@@ -39,10 +38,9 @@ describe('workout controller', () => {
         })
 
         test('Workout findById with a 404 status code', async () => {
-            jest.spyOn(Workout, 'findById').mockRejectedValue({"err": "Workout not found"});
+            jest.spyOn(Workout, 'findById').mockRejectedValue("Workout not found");
             await workoutController.findById(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "Workout not found"});
         })
     });
 
@@ -58,10 +56,9 @@ describe('workout controller', () => {
         })
 
         test('Workout findByUserId with a 404 status code', async () => {
-            jest.spyOn(Workout, 'findByUserId').mockRejectedValue({"err": "Workout not found"});
+            jest.spyOn(Workout, 'findByUserId').mockRejectedValue("Workout not found");
             await workoutController.findByUserId(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "Workout not found"});
         })
     });
 
@@ -77,10 +74,9 @@ describe('workout controller', () => {
         })
 
         test('Workout create with a 422 status code', async () => {
-            jest.spyOn(Workout, 'create').mockRejectedValue({"err": "Workout could not be created"});
+            jest.spyOn(Workout, 'create').mockRejectedValue("Workout could not be created");
             await workoutController.create(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(422);
-            expect(mockJson).toHaveBeenCalledWith({"err": "Workout could not be created"});
         })
     });
 
@@ -96,28 +92,25 @@ describe('workout controller', () => {
         })
 
         test('Workout update with a 404 status code', async () => {
-            jest.spyOn(Workout, 'update').mockRejectedValue({"err": "Workout could not be updated"});
+            jest.spyOn(Workout, 'update').mockRejectedValue("Workout could not be updated");
             await workoutController.update(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "Workout could not be updated"});
         })
     });
 
     describe('destroy', () => {
         test('Workout delete with 204 status code', async () => {
-            jest.spyOn(Workout.prototype, 'destroy').mockResolvedValue({});
+            jest.spyOn(Workout.prototype, 'destroy').mockResolvedValue('Deleted');
             
             const mockReq = { params: { id: 1 } }
             await workoutController.destroy(mockReq, null);
             expect(mockStatus).toHaveBeenCalledWith(204);
-            expect(mockJson).toHaveBeenCalledWith({});
         })
 
         test('Workout destroy with a 404 status code', async () => {
-            jest.spyOn(Workout, 'destroy').mockRejectedValue({"err": "Workout could not be deleted"});
+            jest.spyOn(Workout.prototype, 'destroy').mockRejectedValue({"err": "Workout could not be deleted"});
             await workoutController.destroy(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "Workout could not be deleted"});
         })
     });
     

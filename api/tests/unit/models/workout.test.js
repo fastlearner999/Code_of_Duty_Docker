@@ -28,8 +28,11 @@ describe('Workout', () => {
 
         test('Test getAll workout fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingWorkoutRow);
-            const workouts = await Workout.getAll();
-            expect(workouts).toHaveBeenCalledWith({"err": "Workout not found"});
+            try {
+                await Workout.getAll();
+            } catch (err) {
+                expect(err).toBe("Workout not found");
+            }
         })
     });
 
@@ -43,8 +46,11 @@ describe('Workout', () => {
 
         test('Test findById workout fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingWorkoutRow);
-            const workouts = await Workout.findById(3);
-            expect(workouts).toHaveBeenCalledWith({"err": "Workout not found"});
+            try {
+                await Workout.findByUserId(3);
+            } catch (err) {
+                expect(err).toBe("Workout not found");
+            }
         })
     });
     
@@ -58,8 +64,11 @@ describe('Workout', () => {
 
         test('Test findByUserId workout fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingWorkoutRow);
-            const workouts = await Workout.findByUserId(3);
-            expect(workouts).toHaveBeenCalledWith({"err": "Workout not found"});
+            try {
+                await Workout.findByUserId(3);
+            } catch (err) {
+                expect(err).toBe("Workout not found");
+            }
         })
     });
 
@@ -74,8 +83,11 @@ describe('Workout', () => {
         test('Test create workout fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingWorkoutRow);
             let newWorkout = {id: 5, email: 'eee@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'I', last_name: 'J', gender: 'M'};
-            const result = await Workout.create(newWorkout);
-            expect(result).toHaveBeenCalledWith({"err": "Workout could not be created"});
+            try {
+                await Workout.create(newWorkout);
+            } catch (err) {
+                expect(err).toBe("Workout could not be created");
+            }
         })
     });
 
@@ -90,8 +102,11 @@ describe('Workout', () => {
         test('Test update workout fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingWorkoutRow);
             let updateWorkout = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
-            const result = await Workout.update(updateWorkout);
-            expect(result).toHaveBeenCalledWith({"err": "Workout could not be updated"});
+            try {
+                await Workout.update(updateWorkout);
+            } catch (err) {
+                expect(err).toBe("Workout could not be updated");
+            }
         })
     });
 
@@ -107,7 +122,11 @@ describe('Workout', () => {
             let workoutData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockRejectedValueOnce({rows: [ { ...workoutData, id: 1 }] });
             let workoutObject = new Workout(workoutData);
-            expect(await workoutObject.destroy()).toBe('Workout could not be deleted');
+            try {
+                await workoutObject.destroy();
+            } catch (err) {
+                expect(err).toBe("Workout could not be deleted");
+            }
         })
     });
 })

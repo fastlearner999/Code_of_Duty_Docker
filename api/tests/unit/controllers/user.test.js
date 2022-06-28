@@ -20,10 +20,9 @@ describe('user controller', () => {
         })
 
         test('User getAll with a 500 status code', async () => {
-            jest.spyOn(User, 'getAll').mockRejectedValue({"err": "User not found"});
+            jest.spyOn(User, 'getAll').mockRejectedValue("User not found");
             await userController.getAll(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(500);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User not found"});
         })
     });
 
@@ -39,10 +38,9 @@ describe('user controller', () => {
         })
 
         test('User findById with a 404 status code', async () => {
-            jest.spyOn(User, 'findById').mockRejectedValue({"err": "User not found"});
+            jest.spyOn(User, 'findById').mockRejectedValue("User not found");
             await userController.findById(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User not found"});
         })
     });
 
@@ -58,10 +56,9 @@ describe('user controller', () => {
         })
 
         test('User create with a 422 status code', async () => {
-            jest.spyOn(User, 'create').mockRejectedValue({"err": "User could not be created"});
+            jest.spyOn(User, 'create').mockRejectedValue("User could not be created");
             await userController.create(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(422);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User could not be created"});
         })
     });
 
@@ -77,28 +74,25 @@ describe('user controller', () => {
         })
 
         test('User update with a 404 status code', async () => {
-            jest.spyOn(User, 'update').mockRejectedValue({"err": "User could not be updated"});
+            jest.spyOn(User, 'update').mockRejectedValue("User could not be updated");
             await userController.update(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User could not be updated"});
         })
     });
 
     describe('destroy', () => {
         test('User delete with 204 status code', async () => {
-            jest.spyOn(User.prototype, 'destroy').mockResolvedValue({});
+            jest.spyOn(User.prototype, 'destroy').mockResolvedValue('Deleted');
             
             const mockReq = { params: { id: 1 } }
-            await userController.destroy(mockReq, mockRes);
+            await userController.destroy(mockReq, null);
             expect(mockStatus).toHaveBeenCalledWith(204);
-            expect(mockJson).toHaveBeenCalledWith({});
         })
 
         test('User destroy with a 404 status code', async () => {
-            jest.spyOn(User, 'destroy').mockRejectedValue({"err": "User could not be deleted"});
+            jest.spyOn(User.prototype, 'destroy').mockRejectedValue({"err": "User could not be deleted"});
             await userController.destroy(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User could not be deleted"});
         })
     });
 
@@ -117,14 +111,12 @@ describe('user controller', () => {
             jest.spyOn(User, 'login').mockRejectedValue({"err": "User could not login"});
             await userController.login(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(401);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User could not login"});
         })
     });
 
     describe('logout', () => {
         test('User logout with a 200 status code', async () => {
-            let testUser = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
-            jest.spyOn(User, 'logout').mockResolvedValue(new User(testUser));
+            jest.spyOn(User, 'logout').mockResolvedValue("User logout success");
                 
             const mockReq = { params: { id: 1 } }
             await userController.logout(mockReq, mockRes);
@@ -135,7 +127,6 @@ describe('user controller', () => {
             jest.spyOn(User, 'logout').mockRejectedValue({"err": "User could not logout"});
             await userController.logout(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(401);
-            expect(mockJson).toHaveBeenCalledWith({"err": "User could not logout"});
         })
     });
     

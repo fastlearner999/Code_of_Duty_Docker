@@ -97,7 +97,7 @@ module.exports = class User {
         return new Promise (async (resolve, reject) => {
             try {
                 //TODO
-                resolve ('TODO');
+                resolve ('User logout success');
             } catch (err) {
                 reject(`User could not logout`);
             }
