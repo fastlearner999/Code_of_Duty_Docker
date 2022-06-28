@@ -44,7 +44,8 @@ module.exports = class User {
                     `INSERT INTO users (email, password, first_name, last_name, gender) 
                     VALUES ($1, $2, $3, $4, $5) RETURNING *;`, 
                     [ newUserData.email, newUserData.password, newUserData.first_name, newUserData.last_name, newUserData.gender ]);
-                resolve (userData.rows[0]);
+                let user = new User(userData.rows[0]);
+                resolve (user);
             } catch (err) {
                 reject(`User could not be created`);
             }
@@ -59,7 +60,8 @@ module.exports = class User {
                     SET email = $1, passwprd = $2, first_name = $3, last_name = $4, gender = $5
                     WHERE id = $6 RETURNING *;`, 
                     [ updateUserData.email, updateUserData.passwprd, updateUserData.first_name, updateUserData.last_name, updateUserData.gender, updateUserData.id ]);
-                resolve (userData.rows[0]);
+                let user = new User(userData.rows[0]);
+                resolve (user);
             } catch (err) {
                 reject(`User could not be updated`);
             }

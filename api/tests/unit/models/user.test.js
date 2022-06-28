@@ -58,7 +58,7 @@ describe('User', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingUserRow);
             let newUser = {id: 5, email: 'eee@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'I', last_name: 'J', gender: 'M'};
             const result = await User.create(newUser);
-            expect(result).toHaveProperty('email', 'eee@gmail.com');
+            expect(result).toBeInstanceOf(User);
         })
 
         test('Test create user fail', async () => {
@@ -77,7 +77,7 @@ describe('User', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingUserRow);
             let updateUser = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
             const result = await User.update(updateUser);
-            expect(result).toHaveProperty('email', 'bbb@gmail.com');
+            expect(result).toBeInstanceOf(User);
         })
 
         test('Test update user fail', async () => {
@@ -116,7 +116,7 @@ describe('User', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingUserRow);
             let loginUser = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
             const result = await User.login(loginUser);
-            expect(result).toHaveProperty('email', 'bbb@gmail.com');
+            expect(result).toBeInstanceOf(User);
         })
 
         test('Test login user fail', async () => {
