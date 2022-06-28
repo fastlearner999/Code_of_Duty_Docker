@@ -40,7 +40,6 @@ describe('Workout', () => {
         test('Test findById workout success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingWorkoutRow);
             const workout = await Workout.findById(3);
-            expect(workout).toHaveLength(1);
             expect(workout).toBeInstanceOf(Workout);
         })
 

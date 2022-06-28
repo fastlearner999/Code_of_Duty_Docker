@@ -61,8 +61,8 @@ module.exports = class Workout {
                     WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
                     ORDER BY $4 DESC`, 
                     [ userId, targetMonth, targetYear, sortingCriteria ]);
-                let workouts = workoutData.rows.map(w => new Workout(w));
-                resolve (workouts);
+                    let workout = new Workout(workoutData.rows[0]);
+                resolve (workout);
             } catch (err) {
                 reject('Workout not found');
             }

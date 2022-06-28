@@ -103,7 +103,7 @@ describe('workout controller', () => {
             jest.spyOn(Workout.prototype, 'destroy').mockResolvedValue('Deleted');
             
             const mockReq = { params: { id: 1 } }
-            await workoutController.destroy(mockReq, null);
+            await workoutController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(204);
         })
 
