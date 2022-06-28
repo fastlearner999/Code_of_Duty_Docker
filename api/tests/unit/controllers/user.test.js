@@ -85,7 +85,7 @@ describe('user controller', () => {
             jest.spyOn(User.prototype, 'destroy').mockResolvedValue('Deleted');
             
             const mockReq = { params: { id: 1 } }
-            await userController.destroy(mockReq, null);
+            await userController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(204);
         })
 

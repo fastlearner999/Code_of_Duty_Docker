@@ -57,7 +57,6 @@ describe('Workout', () => {
         test('Test findByUserId workout success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingWorkoutRow);
             const workout = await Workout.findByUserId(3);
-            expect(workout).toHaveLength(1);
             expect(workout).toBeInstanceOf(Workout);
         })
 
@@ -76,7 +75,7 @@ describe('Workout', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingWorkoutRow);
             let newWorkout = {id: 5, email: 'eee@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'I', last_name: 'J', gender: 'M'};
             const result = await Workout.create(newWorkout);
-            expect(result).toHaveProperty('email', 'eee@gmail.com');
+            expect(result).toBeInstanceOf(Workout);
         })
 
         test('Test create workout fail', async () => {
@@ -95,7 +94,7 @@ describe('Workout', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingWorkoutRow);
             let updateWorkout = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
             const result = await Workout.update(updateWorkout);
-            expect(result).toHaveProperty('email', 'bbb@gmail.com');
+            expect(result).toBeInstanceOf(Workout);
         })
 
         test('Test update workout fail', async () => {

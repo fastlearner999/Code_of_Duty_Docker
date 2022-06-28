@@ -52,6 +52,7 @@ async function update (req, res) {
 async function destroy (req, res) {
     try {
         const workout = await Workout.findById(req.params.id);
+        console.log(workout);
         await workout.destroy();
         res.status(204).end();
     } catch (err) {
