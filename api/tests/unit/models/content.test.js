@@ -1,63 +1,43 @@
-const Book = require('../../../models/Book');
-const Author = require('../../../models/Author');
+const Content = require('../../../models/Content');
 
-jest.mock('../../../models/Author');
+jest.mock('../../../models/Content');
 
 const pg = require('pg');
 jest.mock('pg');
 
 const db = require('../../../dbConfig/init');
 
-describe('Book', () => {
+const testingContentRow = { 
+    rows: [
+        {id: 1, title: 'aaa@gmail.com', html_content: '900150983cd24fb0d6963f7d28e17f72'}, 
+        {id: 2, title: 'bbb@gmail.com', html_content: '900150983cd24fb0d6963f7d28e17f72'},
+        {id: 3, title: 'ccc@gmail.com', html_content: '900150983cd24fb0d6963f7d28e17f72'},
+        {id: 4, title: 'ddd@gmail.com', html_content: '900150983cd24fb0d6963f7d28e17f72'}
+    ]
+};
+
+describe('Content', () => {
     beforeEach(() => jest.clearAllMocks())
     
     afterAll(() => jest.resetAllMocks())
 
-    describe('all', () => {
-        test('it resolves with authors on successful db query', async () => {
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({ rows: [{}, {}, {}]});
-            const all = await Book.all;
-            expect(all).toHaveLength(3)
+    describe('getAll', () => {
+        test('Test getAll content success', async () => {
+
+        })
+
+        test('Test getAll content fail', async () => {
+
         })
     });
 
     describe('findById', () => {
-        test('it resolves with book on successful db query', async () => {
-            let bookData = { id: 1, title: 'Test Book' }
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ bookData] });
-            const result = await Book.findById(1);
-            expect(result).toBeInstanceOf(Book)
+        test('Test findById content success', async () => {
+
+        })
+
+        test('Test findById content fail', async () => {
+
         })
     });
-
-    describe('create', () => {
-        test('it resolves with book on successful db query', async () => {
-            let bookData = { title: 'Test Book', yearOfPublication: 2020, abstract: 'test', authorName: 'Test Author' }
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ { ...bookData, id: 1 }] });
-            jest.spyOn(Author, 'findOrCreateByName')
-                .mockResolvedValueOnce(new Author({id: 1, name: 'Test Author'}));
-            const result = await Book.create(bookData);
-            expect(result).toHaveProperty('id')
-        })
-    });
-
-    describe('delete', () => {
-        test('it deletes with book on successful db query', async () => {
-            let bookData = { id: 1, title: 'Test Book', yearOfPublication: 2020, abstract: 'test', authorName: 'Test Author' }
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ { ...bookData, id: 1 }] });
-            jest.spyOn(Author, 'findById')
-                .mockResolvedValueOnce(new Author({id: 1, name: 'Test Author'}));
-            let bookObject = new Book(bookData)
-            expect(await bookObject.destroy()).not.toBeNull()
-
-            //expect(book).toBeNull();
-            //const deleteResult = await book.destroy();
-            //expect(deleteResult).toEqual('Book was deleted');
-        })
-    });
-    
 })

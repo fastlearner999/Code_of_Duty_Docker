@@ -1,28 +1,7 @@
-TRUNCATE authors, books RESTART IDENTITY;
+TRUNCATE users RESTART IDENTITY;
 
-INSERT INTO authors (name) 
+INSERT INTO users (email, password, first_name, last_name, gender) 
 VALUES
-('Test Author 1'),
-('Test Author 2');
-
-INSERT INTO books (title, year_of_publication, abstract, author_id) 
-VALUES
-(
-    'Test Book 1', 
-    1991, 
-    $str$Test book 1 description$str$,
-    1
-),
-(
-    'Test Book 2', 
-    1992, 
-    $str$Test book 2 description$str$,
-    1
-),
-(
-    'Test Book 3',
-    1993,
-    $str$Test book 3 description$str$,
-    2
-
-);
+('tester1@gmail.com', '99d8c939300ceb17112aad875914c40f', 'Tester1', 'A', 'M'),
+('tester2@gmail.com', '88e6b40bbb49de64dffa614724996c34', 'Tester2', 'B', 'M'),
+('tester3@gmail.com', 'b4ddd22be1f232eabf85bebb84b07837', 'Tester3', 'C', 'F');

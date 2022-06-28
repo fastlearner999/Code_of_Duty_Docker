@@ -1,63 +1,73 @@
-const Book = require('../../../models/Book');
-const Author = require('../../../models/Author');
+const Goal = require('../../../models/Goal');
 
-jest.mock('../../../models/Author');
+jest.mock('../../../models/Goal');
 
 const pg = require('pg');
 jest.mock('pg');
 
 const db = require('../../../dbConfig/init');
 
-describe('Book', () => {
-    beforeEach(() => jest.clearAllMocks())
-    
-    afterAll(() => jest.resetAllMocks())
+const testingGoalRow = { 
+    rows: [
+        {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'}, 
+        {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'},
+        {id: 3, email: 'ccc@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'E', last_name: 'F', gender: 'M'},
+        {id: 4, email: 'ddd@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'G', last_name: 'H', gender: 'F'}
+    ]
+};
 
-    describe('all', () => {
-        test('it resolves with authors on successful db query', async () => {
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({ rows: [{}, {}, {}]});
-            const all = await Book.all;
-            expect(all).toHaveLength(3)
+describe('Goal', () => {
+    beforeEach(() => jest.clearAllMocks())
+
+    afterAll(() => jest.resetAllMocks())
+    
+    describe('getAll', () => {
+        test('Test getAll user success', async () => {
+            
+        })
+
+        test('Test getAll user fail', async () => {
+            
         })
     });
 
     describe('findById', () => {
-        test('it resolves with book on successful db query', async () => {
-            let bookData = { id: 1, title: 'Test Book' }
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ bookData] });
-            const result = await Book.findById(1);
-            expect(result).toBeInstanceOf(Book)
+        test('Test findById user success', async () => {
+            
+        })
+
+        test('Test findById user fail', async () => {
+            
         })
     });
 
     describe('create', () => {
-        test('it resolves with book on successful db query', async () => {
-            let bookData = { title: 'Test Book', yearOfPublication: 2020, abstract: 'test', authorName: 'Test Author' }
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ { ...bookData, id: 1 }] });
-            jest.spyOn(Author, 'findOrCreateByName')
-                .mockResolvedValueOnce(new Author({id: 1, name: 'Test Author'}));
-            const result = await Book.create(bookData);
-            expect(result).toHaveProperty('id')
+        test('Test create user success', async () => {
+            
+        })
+
+        test('Test create user fail', async () => {
+            
         })
     });
 
-    describe('delete', () => {
-        test('it deletes with book on successful db query', async () => {
-            let bookData = { id: 1, title: 'Test Book', yearOfPublication: 2020, abstract: 'test', authorName: 'Test Author' }
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ { ...bookData, id: 1 }] });
-            jest.spyOn(Author, 'findById')
-                .mockResolvedValueOnce(new Author({id: 1, name: 'Test Author'}));
-            let bookObject = new Book(bookData)
-            expect(await bookObject.destroy()).not.toBeNull()
+    describe('update', () => {
+        test('Test update user success', async () => {
+            
+        })
 
-            //expect(book).toBeNull();
-            //const deleteResult = await book.destroy();
-            //expect(deleteResult).toEqual('Book was deleted');
+        test('Test update user fail', async () => {
+            
         })
     });
-    
+
+    describe('destroy', () => {
+        test('Test delete user success', async () => {
+            
+        })
+
+        test('Test delete user fail', async () => {
+            
+        })
+    });
 })
