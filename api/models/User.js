@@ -13,14 +13,14 @@ module.exports = class User {
         this.last_login = data.last_login;
     };
 
-    static get all(){
+    static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
                 let userData = await db.query('SELECT * FROM users');
                 let users = userData.rows.map(u => new User(u));
                 resolve(users);
             } catch (err) {
-                reject('User not found');
+                reject(`User not found`);
             }
         });
     };
@@ -32,7 +32,7 @@ module.exports = class User {
                 let user = new User(userData.rows[0]);
                 resolve(user);
             } catch (err) {
-                reject('User not found');
+                reject(`User not found`);
             }
         });
     };
@@ -46,7 +46,7 @@ module.exports = class User {
                     [ newUserData.email, newUserData.password, newUserData.first_name, newUserData.last_name, newUserData.gender ]);
                 resolve (userData.rows[0]);
             } catch (err) {
-                reject('User could not be created');
+                reject(`User could not be created`);
             }
         });
     };
@@ -61,7 +61,7 @@ module.exports = class User {
                     [ updateUserData.email, updateUserData.passwprd, updateUserData.first_name, updateUserData.last_name, updateUserData.gender, updateUserData.id ]);
                 resolve (userData.rows[0]);
             } catch (err) {
-                reject('User could not be updated');
+                reject(`User could not be updated`);
             }
         });
     };
@@ -69,10 +69,10 @@ module.exports = class User {
     destroy(){
         return new Promise(async(resolve, reject) => {
             try {
-                await db.query('DELETE FROM users WHERE id = $1', [ this.id ]);
-                resolve('Book was deleted');
+                await db.query(`DELETE FROM users WHERE id = $1`, [ this.id ]);
+                resolve(`User was deleted`);
             } catch (err) {
-                reject('User could not be deleted')
+                reject(`User could not be deleted`);
             }
         })
     };
@@ -88,7 +88,7 @@ module.exports = class User {
                     WHERE id = $1`, [ user.id ]);
                 resolve (user);
             } catch (err) {
-                reject('User could not be updated');
+                reject(`User could not login`);
             }
         });
     };
@@ -99,7 +99,7 @@ module.exports = class User {
                 //TODO
                 resolve ('TODO');
             } catch (err) {
-                reject('User could not be updated');
+                reject(`User could not logout`);
             }
         });
     };

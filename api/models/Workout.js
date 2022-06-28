@@ -32,7 +32,7 @@ module.exports = class Workout {
         return new Promise (async (resolve, reject) => {
             try {
                 let workData = await db.query(`SELECT * FROM workouts WHERE id = $1`, [ id ]);
-                let workout = new Book(workData.rows[0]);
+                let workout = new Workout(workData.rows[0]);
                 resolve (workout);
             } catch (err) {
                 reject('Workout not found');
