@@ -112,36 +112,36 @@ module.exports = class Goal {
     };
     
 
-    /*****************************************************
-     * ******** check if findbyuser function is needed*****
-     *****************************************************/
 
-//     static findByUserId(userId, month, year, sortBy){
-//         return new Promise (async (resolve, reject) => {
-//         try {
-//             let targetMonth = "" + new Date().getMonth();
-//             if (month !== null) {
-//                 targetMonth = month;
-//             }
-//             let targetYear = "" + new Date().getFullYear();
-//             if (year !== null) {
-//                 targetYear = year;
-//             }
-//             let sortingCriteria = 'create_date';
-//             if (sortBy === 'sport_type') {
-//                 sortingCriteria = 'sport_type';
-//             }
-//             let workoutData = await db.query(
-//                 `SELECT * 
-//                 FROM workouts 
-//                 WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
-//                 ORDER BY $4 DESC`, 
-//                 [ userId, targetMonth, targetYear, sortingCriteria ]);
-//             let workouts = workoutData.rows.map(w => new Workout(w));
-//             resolve (workouts);
-//         } catch (err) {
-//             reject('Workout not found');
-//         }
-//     });
-// };
+    static findByUserId(userId, month, year, sortBy){
+        return new Promise (async (resolve, reject) => {
+        try {
+            let targetMonth = "" + new Date().getMonth();
+            if (month !== null) {
+                targetMonth = month;
+            }
+            let targetYear = "" + new Date().getFullYear();
+            if (year !== null) {
+                targetYear = year;
+            }
+            let sortingCriteria = 'create_date';
+            if (sortBy === 'sport_type') {
+                sortingCriteria = 'sport_type';
+            }
+            let goalData = await db.query(
+                `SELECT  goals.*
+                 FROM goals
+                 JOIN user_goal 
+                 ON goals.id = user_goal.goal_id
+                 
+                WHERE user_id = $1 AND to_char(create_date, 'MM') = $2 AND to_char(create_date, 'YYYY') = $3 
+                ORDER BY $4 DESC`, 
+                [ userId, targetMonth, targetYear, sortingCriteria ]);
+            let goals = goalData.rows.map(g => new Goal(g));
+            resolve (goals);
+        } catch (err) {
+            reject('Goal not found');
+        }
+    });
+};
 };

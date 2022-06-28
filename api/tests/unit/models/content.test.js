@@ -23,21 +23,30 @@ describe('Content', () => {
 
     describe('getAll', () => {
         test('Test getAll content success', async () => {
-
+            jest.spyOn(db, 'query').mockResolvedValueOnce(testingContentRow);
+            const contents = await Content.getAll();
+            expect(contents).toHaveLength(4);
         })
 
         test('Test getAll content fail', async () => {
-
+            jest.spyOn(db, 'query').mockRejectedValueOnce(testingContentRow);
+            const contents = await Content.getAll();
+            expect(contents).toHaveBeenCalledWith({"err": "Content not found"});
         })
     });
 
     describe('findById', () => {
         test('Test findById content success', async () => {
-
+            jest.spyOn(db, 'query').mockResolvedValueOnce(testingContentRow);
+            const content = await Content.findById(3);
+            expect(content).toHaveLength(1);
+            expect(content).toBeInstanceOf(Content);
         })
 
         test('Test findById content fail', async () => {
-
+            jest.spyOn(db, 'query').mockRejectedValueOnce(testingContentRow);
+            const contents = await Content.findById(3);
+            expect(contents).toHaveBeenCalledWith("Content not found");
         })
     });
 })
