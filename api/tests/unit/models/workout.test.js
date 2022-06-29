@@ -1,3 +1,4 @@
+require('../../../env');
 const Workout = require('../../../models/Workout');
 
 const pg = require('pg');
