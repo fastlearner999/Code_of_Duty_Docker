@@ -74,6 +74,16 @@ function deleteHabit(e) {
   localStorage.setItem("habits", JSON.stringify(habits));
 }
 
+// Update Habit 
+
+
+
+_e('btn').addEventListener('click', function() {
+  _e('demo').innerHTML = '';
+}, false);
+
+
+
 addHabits.addEventListener("submit", addHabit);
 habitsList.addEventListener("click", toggleCompleted);
 habitsList.addEventListener("click", deleteHabit);
