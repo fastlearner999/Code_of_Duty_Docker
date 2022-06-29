@@ -1,3 +1,4 @@
+require('../../../env');
 const Content = require('../../../models/Content');
 
 
@@ -30,8 +31,11 @@ describe('Content', () => {
 
         test('Test getAll content fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingContentRow);
-            const contents = await Content.getAll();
-            expect(contents).toHaveBeenCalledWith("Content not found");
+            try {
+                await Content.getAll();
+            } catch (err) {
+                expect(err).toBe("Content not found");
+            }
         })
     });
 
@@ -44,7 +48,6 @@ describe('Content', () => {
 
         test('Test findById content fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingContentRow);
-             
             try {
                 await Content.findById(3);
             } catch (err) {

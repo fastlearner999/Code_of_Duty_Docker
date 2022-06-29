@@ -47,7 +47,7 @@ describe('Workout', () => {
         test('Test findById workout fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingWorkoutRow);
             try {
-                await Workout.findByUserId(3);
+                await Workout.findById(3);
             } catch (err) {
                 expect(err).toBe("Workout not found");
             }

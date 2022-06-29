@@ -1,3 +1,4 @@
+require('../../../env');
 const goalController = require('../../../controllers/goal')
 const Goal = require('../../../models/Goal');
 

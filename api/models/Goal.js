@@ -87,7 +87,7 @@ module.exports = class Goal {
                         updateGoalData.start_date,
                         updateGoalData.end_date,
                         updateGoalData.target_distance,
-                        updateGoalData.target_distance_unit,
+                        updateGoalData.target_distance_unit
                     ]);
                 let goal = new Goal(goalData.rows[0]);
                 resolve (goal);

@@ -1,3 +1,4 @@
+require('../../../env');
 const Goal = require('../../../models/Goal');
 
 const pg = require('pg');
@@ -30,7 +31,7 @@ describe('Goal', () => {
         test('Test getAll goal fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingGoalRow);
             try {
-                await Content.getAll();
+                await Goal.getAll();
             } catch (err) {
                 expect(err).toBe("Content not found");
             }
@@ -41,7 +42,6 @@ describe('Goal', () => {
         test('Test findById goal success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingGoalRow);
             const goal = await Goal.findById(3);
-            expect(goal).toHaveLength(1);
             expect(goal).toBeInstanceOf(Goal);
         })
 

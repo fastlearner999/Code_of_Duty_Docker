@@ -21,7 +21,7 @@ describe('Test', () => {
         test('Test getAll test success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingTestRow);
             const tests = await Test.getAll();
-            expect(tests).toHaveLength(4);
+            expect(tests).toHaveLength(1);
         })
 
         test('Test getAll test fail', async () => {
@@ -29,7 +29,7 @@ describe('Test', () => {
             try {
                 await Test.getAll();
             } catch (err) {
-                expect(err).toBe("Test not found");
+                expect(err).toBe("Unable to connect AWS Postgres database");
             }
         })
     });
