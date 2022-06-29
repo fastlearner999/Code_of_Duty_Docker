@@ -101,16 +101,17 @@ describe('workout controller', () => {
 
     describe('destroy', () => {
         test('Workout delete with 204 status code', async () => {
-            jest.spyOn(Workout.prototype, 'destroy').mockResolvedValue('Deleted');
-            
+            let testWorkout = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
+            jest.spyOn(Workout, 'destroy').mockResolvedValue(new Workout(testWorkout));
             const mockReq = { params: { id: 1 } }
             await workoutController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(204);
         })
 
         test('Workout destroy with a 404 status code', async () => {
-            jest.spyOn(Workout.prototype, 'destroy').mockRejectedValue({"err": "Workout could not be deleted"});
-            await workoutController.destroy(null, mockRes);
+            jest.spyOn(Workout, 'destroy').mockRejectedValue({"err": "Workout could not be deleted"});
+            const mockReq = { params: { id: 1 } }
+            await workoutController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
         })
     });

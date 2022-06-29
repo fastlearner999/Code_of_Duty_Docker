@@ -93,19 +93,18 @@ describe('User', () => {
     });
 
     describe('destroy', () => {
+        let userData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
+        let userObject = new User(userData);
+
         test('Test delete user success', async () => {
-            let userData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [ { ...userData, id: 1 }] });
-            let userObject = new User(userData);
-            expect(await userObject.destroy()).not.toBeNull();
+            expect(await User.destroy(userObject)).not.toBeNull();
         })
 
         test('Test delete user fail', async () => {
-            let userData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockRejectedValueOnce({rows: [ { ...userData, id: 1 }] });
-            let userObject = new User(userData);
             try {
-                await userObject.destroy();
+                await User.destroy(userObject);
             } catch (err) {
                 expect(err).toBe("User could not be deleted");
             }

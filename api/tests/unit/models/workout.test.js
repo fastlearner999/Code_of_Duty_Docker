@@ -110,19 +110,18 @@ describe('Workout', () => {
     });
 
     describe('destroy', () => {
+        let workoutData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
+        let workoutObject = new Workout(workoutData);
+
         test('Test delete workout success', async () => {
-            let workoutData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [ { ...workoutData, id: 1 }] });
-            let workoutObject = new Workout(workoutData);
-            expect(await workoutObject.destroy()).not.toBeNull();
+            expect(await Workout.destroy(workoutObject)).not.toBeNull();
         })
 
         test('Test delete workout fail', async () => {
-            let workoutData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockRejectedValueOnce({rows: [ { ...workoutData, id: 1 }] });
-            let workoutObject = new Workout(workoutData);
             try {
-                await workoutObject.destroy();
+                await Workout.destroy(workoutObject);
             } catch (err) {
                 expect(err).toBe("Workout could not be deleted");
             }
