@@ -1,7 +1,5 @@
 const Goal = require('../../../models/Goal');
 
-
-
 const pg = require('pg');
 jest.mock('pg');
 
@@ -31,8 +29,11 @@ describe('Goal', () => {
 
         test('Test getAll goal fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingGoalRow);
-            const goals = await Goal.getAll();
-            expect(goals).toHaveBeenCalledWith("Goal not found");
+            try {
+                await Content.getAll();
+            } catch (err) {
+                expect(err).toBe("Content not found");
+            }
         })
     });
 
@@ -59,7 +60,7 @@ describe('Goal', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingGoalRow);
             let newGoal = {id: 5, email: 'eee@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'I', last_name: 'J', gender: 'M'};
             const result = await Goal.create(newGoal);
-            expect(result).toHaveProperty('email', 'eee@gmail.com');
+            expect(result).toBeInstanceOf(Goal);
         })
 
         test('Test create goal fail', async () => {
@@ -78,7 +79,7 @@ describe('Goal', () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingGoalRow);
             let updateGoal = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
             const result = await Goal.update(updateGoal);
-            expect(result).toHaveProperty('email', 'bbb@gmail.com');
+            expect(result).toBeInstanceOf(Goal);
         })
 
         test('Test update goal fail', async () => {
