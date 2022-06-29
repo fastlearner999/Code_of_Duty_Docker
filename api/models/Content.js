@@ -2,20 +2,20 @@ const db = require('../dbConfig/init');
 
 module.exports = class Content {
     constructor(data){
-        /*this.id = data.id;
-        this.title = data.title;
-        this.yearOfPublication = data.year_of_publication;
-        this.abstract = data.abstract;
-        this.author = { name: data.author_name, path: `/authors/${data.author_id}`};*/
+
+        this.id = data.id;
+        this.html_content = data.html_content;
+        this.create_date = data.create_date;  
+        this.update_date = data.update_date;  
+        
     };
 
-    static get all(){
+    static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query('SELECT * FROM books');
-                let books = bookData.rows.map(b => new Book(b));
-                resolve (books);*/
-                resolve('Resolve');
+                let contentData = await db.query('SELECT * FROM contents');
+                let contents = contentData.rows.map(c => new Content(c));
+                resolve (contents);
             } catch (err) {
                 reject('Content not found');
             }
@@ -25,14 +25,12 @@ module.exports = class Content {
     static findById(id){
         return new Promise (async (resolve, reject) => {
             try {
-                /*let bookData = await db.query(`SELECT books.*, authors.name as author_name
-                                                    FROM books 
-                                                    JOIN authors
-                                                    ON books.author_id = authors.id
-                                                    WHERE books.id = $1;`, [ id ]);
-                let book = new Book(bookData.rows[0]);
-                resolve (book);*/
-                resolve('Resolve');
+               let contentData = await db.query(
+                `SELECT * 
+                FROM contents 
+                WHERE id = $1;`, [id])
+                let content = new Content(contentData.rows[0]);
+                resolve (content);
             } catch (err) {
                 reject('Content not found');
             }
