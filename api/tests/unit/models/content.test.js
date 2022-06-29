@@ -1,6 +1,6 @@
 const Content = require('../../../models/Content');
 
-jest.mock('../../../models/Content');
+
 
 const pg = require('pg');
 jest.mock('pg');
@@ -31,7 +31,7 @@ describe('Content', () => {
         test('Test getAll content fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingContentRow);
             const contents = await Content.getAll();
-            expect(contents).toHaveBeenCalledWith({"err": "Content not found"});
+            expect(contents).toHaveBeenCalledWith("Content not found");
         })
     });
 
@@ -39,14 +39,17 @@ describe('Content', () => {
         test('Test findById content success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingContentRow);
             const content = await Content.findById(3);
-            expect(content).toHaveLength(1);
             expect(content).toBeInstanceOf(Content);
         })
 
         test('Test findById content fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingContentRow);
-            const contents = await Content.findById(3);
-            expect(contents).toHaveBeenCalledWith("Content not found");
+             
+            try {
+                await Content.findById(3);
+            } catch (err) {
+                expect(err).toBe("Content not found");
+            }
         })
     });
 })

@@ -1,3 +1,4 @@
+require('../../../env');
 const User = require('../../../models/User');
 
 const pg = require('pg');

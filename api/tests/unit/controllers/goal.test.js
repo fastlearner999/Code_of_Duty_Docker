@@ -13,7 +13,7 @@ describe('goal controller', () => {
 
     describe('getAll', () => {
         test('Goal getAll with a 200 status code', async () => {
-            jest.spyOn(Goal, 'getAll').mockResolvedValue(['Goal1', 'Goal2']);
+            jest.spyOn(Goal, 'getAll').mockResolvedValue(['goal1', 'goal2']);
             await goalController.getAll(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(200);
             expect(mockJson).toHaveBeenCalledWith(['goal1', 'goal2']);

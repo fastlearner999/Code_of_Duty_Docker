@@ -16,7 +16,7 @@ module.exports = class Goal {
         this.update_date = data.update_date
     };
 
-    static get all(){
+    static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(
@@ -62,7 +62,8 @@ module.exports = class Goal {
                        newgoalData.target_distance,
                        newgoalData.target_distance_unit,
                     ]);
-                resolve (goalData.rows[0]);
+                    let goal = new Goal(goalData.rows[0]);
+                resolve (goal);
             } catch (err) {
                 reject('Goal could not be created');
             }
@@ -74,7 +75,7 @@ module.exports = class Goal {
             try {
                 let goalData = await db.query(
 
-                    `UPDATE workouts
+                    `UPDATE goals
                     SET goal_name = $1, sport_type = $2, period = $3, period_type = $4, start_date = $5, end_date = $6, target_distance = $7, target_distance_unit = $8
                     WHERE id= $9
                     RETURNING *;`,
@@ -88,7 +89,8 @@ module.exports = class Goal {
                         updateGoalData.target_distance,
                         updateGoalData.target_distance_unit,
                     ]);
-                resolve (goalData.rows[0]);
+                let goal = new Goal(goalData.rows[0]);
+                resolve (goal);
             } catch (err) {
                 reject('Goal could not be updated');
             }
