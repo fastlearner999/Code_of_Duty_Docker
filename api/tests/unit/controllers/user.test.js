@@ -1,3 +1,4 @@
+require('../../../env');
 const userController = require('../../../controllers/user')
 const User = require('../../../models/User');
 
