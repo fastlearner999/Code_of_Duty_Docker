@@ -1,4 +1,4 @@
-module.exports.verifyTokenFromBrowser = (req, res, next) => {
+module.exports.verifyTokenFromClient = (req, res, next) => {
     const token = req.headers['authorization'];
     if (token) {
         jwt.verify(token, process.env.SECERT, async (err, data) => {
