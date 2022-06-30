@@ -4,6 +4,7 @@ module.exports = class Goal {
     constructor(data){
 
         this.id = data.id 
+        this.user_id = data.user_id
         this.goal_name = data.goal_name
         this.sport_type = data.sport_type
         this.period = data.period
@@ -50,8 +51,8 @@ module.exports = class Goal {
         return new Promise (async (resolve, reject) => {
             try {
                 let goalData = await db.query(`
-                INSERT INTO goals (goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit) 
-                VALUES ($1, $2, $3, $4 $5, $6, $7, $8) 
+                INSERT INTO goals ( goal_name, sport_type, period, period_type, start_date, end_date, target_distance, target_distance_unit, user_id) 
+                VALUES ($1, $2, $3, $4 $5, $6, $7, $8, $9) 
                 RETURNING *;`,
                        [ newgoalData.goal_name,
                        newgoalData.sport_type,
@@ -61,6 +62,7 @@ module.exports = class Goal {
                        newgoalData.end_date,
                        newgoalData.target_distance,
                        newgoalData.target_distance_unit,
+                       newgoalData.user_id
                     ]);
                     let goal = new Goal(goalData.rows[0]);
                 resolve (goal);
