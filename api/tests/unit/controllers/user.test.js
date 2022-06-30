@@ -83,16 +83,17 @@ describe('user controller', () => {
 
     describe('destroy', () => {
         test('User delete with 204 status code', async () => {
-            jest.spyOn(User.prototype, 'destroy').mockResolvedValue('Deleted');
-            
+            let testUser = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
+            jest.spyOn(User, 'destroy').mockResolvedValue(new User(testUser));
             const mockReq = { params: { id: 1 } }
             await userController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(204);
         })
 
         test('User destroy with a 404 status code', async () => {
-            jest.spyOn(User.prototype, 'destroy').mockRejectedValue({"err": "User could not be deleted"});
-            await userController.destroy(null, mockRes);
+            jest.spyOn(User, 'destroy').mockRejectedValue({"err": "User could not be deleted"});
+            const mockReq = { params: { id: 1 } }
+            await userController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
         })
     });

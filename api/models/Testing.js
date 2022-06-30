@@ -1,6 +1,6 @@
 const db = require('../dbConfig/init');
 
-module.exports = class Test {
+module.exports = class Testing {
     constructor(data){
         this.data = data.data;
     };
@@ -8,11 +8,10 @@ module.exports = class Test {
     static getAll(){
         return new Promise (async (resolve, reject) => {
             try {
-                let testData = await db.query('SELECT * FROM test');
-                let testResult = testData.rows.map(u => new Test(u));
-                resolve(testResult);
+                let testingData = await db.query('SELECT * FROM test');
+                let testingResult = testingData.rows.map(u => new Testing(u));
+                resolve(testingResult);
             } catch (err) {
-                console.log(err);
                 reject(`Unable to connect AWS Postgres database`);
             }
         });

@@ -1,3 +1,4 @@
+require('../../../env');
 const Goal = require('../../../models/Goal');
 
 const pg = require('pg');
@@ -30,9 +31,9 @@ describe('Goal', () => {
         test('Test getAll goal fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingGoalRow);
             try {
-                await Content.getAll();
+                await Goal.getAll();
             } catch (err) {
-                expect(err).toBe("Content not found");
+                expect(err).toBe("Goal not found");
             }
         })
     });
@@ -41,7 +42,6 @@ describe('Goal', () => {
         test('Test findById goal success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingGoalRow);
             const goal = await Goal.findById(3);
-            expect(goal).toHaveLength(1);
             expect(goal).toBeInstanceOf(Goal);
         })
 
@@ -49,6 +49,23 @@ describe('Goal', () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingGoalRow);
             try {
                 await Goal.findById(3);
+            } catch (err) {
+                expect(err).toBe("Goal not found");
+            }
+        })
+    });
+
+    describe('findByUserId', () => {
+        test('Test findByUserId goal success', async () => {
+            jest.spyOn(db, 'query').mockResolvedValueOnce(testingGoalRow);
+            const goal = await Goal.findByUserId(3);
+            expect(goal).toBeInstanceOf(Goal);
+        })
+
+        test('Test findByUserId goal fail', async () => {
+            jest.spyOn(db, 'query').mockRejectedValueOnce(testingGoalRow);
+            try {
+                await Goal.findByUserId(3);
             } catch (err) {
                 expect(err).toBe("Goal not found");
             }
@@ -94,19 +111,18 @@ describe('Goal', () => {
     });
 
     describe('destroy', () => {
+        let goalData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
+        let goalObject = new Goal(goalData);
+
         test('Test delete goal success', async () => {
-            let goalData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockResolvedValueOnce({rows: [ { ...goalData, id: 1 }] });
-            let goalObject = new Goal(goalData);
-            expect(await goalObject.destroy()).not.toBeNull();
+            expect(await Goal.destroy(goalObject)).not.toBeNull();
         })
 
         test('Test delete goal fail', async () => {
-            let goalData = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
             jest.spyOn(db, 'query').mockRejectedValueOnce({rows: [ { ...goalData, id: 1 }] });
-            let goalObject = new Goal(goalData);
             try {
-                await goalObject.destroy();
+                await Goal.destroy(goalObject);
             } catch (err) {
                 expect(err).toBe("Goal could not be deleted");
             }

@@ -1,9 +1,9 @@
-const Test = require('../models/Test');
+const Testing = require('../models/Testing');
 
 async function getAll (req, res) {
     try {
-        const test = await Test.getAll();
-        res.status(200).json(test);
+        const testing = await Testing.getAll();
+        res.status(200).json(testing);
     } catch (err) {
         res.status(500).json({err})
     }

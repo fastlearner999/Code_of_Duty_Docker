@@ -1,3 +1,4 @@
+require('../../../env');
 const goalController = require('../../../controllers/goal')
 const Goal = require('../../../models/Goal');
 
@@ -101,16 +102,17 @@ describe('goal controller', () => {
 
     describe('destroy', () => {
         test('Goal delete with 204 status code', async () => {
-            jest.spyOn(Goal.prototype, 'destroy').mockResolvedValue('Deleted');
-            
+            let testGoal = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
+            jest.spyOn(Goal, 'destroy').mockResolvedValue(new Goal(testGoal));
             const mockReq = { params: { id: 1 } }
-            await goalController.destroy(mockReq, null);
+            await goalController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(204);
         })
 
         test('Goal destroy with a 404 status code', async () => {
             jest.spyOn(Goal, 'destroy').mockRejectedValue("Goal could not be deleted");
-            await goalController.destroy(null, mockRes);
+            const mockReq = { params: { id: 1 } }
+            await goalController.destroy(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(404);
         })
     });
