@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const User = require('../../../models/User');
 
 const pg = require('pg');
@@ -111,21 +111,21 @@ describe('User', () => {
         })
     });
 
-    describe('login', () => {
-        test('Test login user success', async () => {
+    describe('findByEmail', () => {
+        test('Test findByEmail user success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingUserRow);
             let loginUser = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
-            const result = await User.login(loginUser);
+            const result = await User.findByEmail(loginUser);
             expect(result).toBeInstanceOf(User);
         })
 
-        test('Test login user fail', async () => {
+        test('Test findByEmail user fail', async () => {
             jest.spyOn(db, 'query').mockRejectedValueOnce(testingUserRow);
             let loginUser = {id: 2, email: 'bbb@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'C', last_name: 'D', gender: 'F'};
             try {
-                await User.login(loginUser);
+                await User.findByEmail(loginUser);
             } catch (err) {
-                expect(err).toBe("User could not login");
+                expect(err).toBe("User not found");
             }
         })
     });

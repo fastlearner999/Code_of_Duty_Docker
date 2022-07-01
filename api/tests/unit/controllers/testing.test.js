@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const testingController = require('../../../controllers/testing')
 const Testing = require('../../../models/Testing');
 

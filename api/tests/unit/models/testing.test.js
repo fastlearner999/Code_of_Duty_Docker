@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const Testing = require('../../../models/Testing');
 
 const pg = require('pg');

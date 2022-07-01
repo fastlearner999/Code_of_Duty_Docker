@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const Goal = require('../../../models/Goal');
 
 const pg = require('pg');
@@ -59,7 +59,7 @@ describe('Goal', () => {
         test('Test findByUserId goal success', async () => {
             jest.spyOn(db, 'query').mockResolvedValueOnce(testingGoalRow);
             const goal = await Goal.findByUserId(3);
-            expect(goal).toBeInstanceOf(Goal);
+            expect(goal).toHaveLength(4);
         })
 
         test('Test findByUserId goal fail', async () => {

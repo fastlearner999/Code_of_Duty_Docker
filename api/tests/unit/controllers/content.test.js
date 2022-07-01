@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const contentController = require('../../../controllers/content')
 const Content = require('../../../models/Content');
 

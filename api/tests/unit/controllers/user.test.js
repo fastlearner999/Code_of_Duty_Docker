@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const userController = require('../../../controllers/user')
 const User = require('../../../models/User');
 
@@ -99,18 +99,16 @@ describe('user controller', () => {
     });
 
     describe('login', () => {
-        test('User login with a 200 status code', async () => {
-            let testUser = {id: 1, email: 'aaa@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72', first_name: 'A', last_name: 'B', gender: 'M'};
-            jest.spyOn(User, 'login').mockResolvedValue(new User(testUser));
+        test('User findByEmail with a 200 status code', async () => {
+            jest.spyOn(User, 'findByEmail').mockResolvedValue({ body: { email: 'test@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72'}});
                 
-            const mockReq = { params: { id: 1 } }
+            const mockReq = { body: { email: 'test@gmail.com', password: '900150983cd24fb0d6963f7d28e17f72'} }
             await userController.login(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(200);
-            expect(mockJson).toHaveBeenCalledWith(new User(testUser));
         })
 
         test('User login with a 401 status code', async () => {
-            jest.spyOn(User, 'login').mockRejectedValue({"err": "User could not login"});
+            jest.spyOn(User, 'findByEmail').mockRejectedValue({"err": "User not found"});
             await userController.login(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(401);
         })

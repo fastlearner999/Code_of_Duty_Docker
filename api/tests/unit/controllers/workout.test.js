@@ -1,4 +1,4 @@
-require('../../../env');
+require('../../../util/env');
 const workoutController = require('../../../controllers/workout')
 const Workout = require('../../../models/Workout');
 
