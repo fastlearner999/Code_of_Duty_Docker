@@ -1,74 +1,31 @@
-# Code of Duty project - Energize App
+# Lap 2 project (furtureproof) - Energize App - Team Code of Duty - Backend repo
+- Aaron Smith (fastlearner999)
+- Abigail Shadare (abscoding)
+- Nathan Olds (nathanolds)
+- Wing Yuen (wingyuen2022)
 
-Welcome to your second debugging assignment! This is a full stack web application with an HTML/CSS/JS client and an Express server connected to PostgreSQL database.
+## External libraries used
 
-**Please make sure that you read *all* the instructions before starting.**
+- bcryptjs
+- cors.js
+- crypto-js
+- dotenv
+- express
+- jsonwebtoken
+- pg
 
-You are going to debug and complete an app called *The Reading Room*.
-- Users can see a list of all books 
-- Users can see a list of all authors in the database
-- Users can select a book to see more details on the book
-- Users can select an author to see a list of books by that author
-- Users can add a new book to the database
-    - If the new book is by an author not currently in the database, a record is created for that author
-- Users can delete a book
-    - If, upon deletion of a book, the associated author has no more books in the database, that author's record is also deleted
+## Installation
 
+1. Clone the repo 
+2. In /api folder run command:
+    ```
+    npm install
+    ```
 
-## Code of Conduct
-- Do not ask your classmates (verbally or through any other communication method) for help.
-- Do not copy/paste any code from someone else or from any online resource.
+## Usage
+- In /api folder run command:
 
+    ```
+    node run dev
+    ```
 
-## Tasks
-Take your time to familiarise yourself with the structure of this app before you start debugging. 
-
-Watch [this clip](https://youtu.be/fq53QtF-5MU) to see the desired user experience.
-
-### Client
-- **Do not make changes within the given /client folder** 
-- You may, however, find some useful clues in there for what data it is expecting to receive from the API! ***Look but don't touch!***
-
-### Express
-- Ensure all existing endpoints are accessible
-- Ensure all endpoints return the data structure expected by the client
-- Implement an endpoint for the 'delete book' feature
-
-### Postgres
-- Ensure database table schemas are complete
-- Ensure all database queries are formatted correctly
-
-### Tests
-- The existing test configuration does not need changing and no additional test config should be required
-- The existing tests do not need changing
-- All tests should be passing by the end of your debugging session
-
-### README
-- Add a useful README to document your work, take a look at [this guide](https://gist.github.com/getfutureproof-admin/dfe45adba508f931bf83d144cbbf6bbe) on assignment specific requirements.
-
-
-## Key provided scripts and intended functionality
-You should not have to make changes to the scripts or docker-compose configuration themselves. \
-**The files they reference may require attention before the containers are successfully started. *Use the Docker output to guide you here* - there may be some very useful errors!**
-
-**bash _scripts/startDev.sh**
-- starts client, api & db services
-- runs db migrations
-- seeds db for development
-- serves client on localhost:8080
-- serves api on localhost:3000
-
-**bash _scripts/startTest.sh**
-- starts api & db services
-- runs db migrations
-- attaches to api container and triggers full test run
-- no ports mapped to local host
-
-**bash _scripts/teardown.sh**
-- stop all running services
-- removes containers
-- removes volumes
-
-These enviroments will take a little time to set up especially the first time you run but both will listen for changes when running *except* for database setup files ie. anything in `db/migrations`. 
-
-***Do not run both dev and test environments at the same time.***
